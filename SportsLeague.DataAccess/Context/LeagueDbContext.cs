@@ -65,6 +65,66 @@ public class LeagueDbContext : DbContext
 
         });
 
+        // ── Player Configuration ──
+
+        modelBuilder.Entity<Player>(entity =>
+
+        {
+
+            entity.HasKey(p => p.Id);
+
+            entity.Property(p => p.FirstName)
+
+            .IsRequired()
+
+            .HasMaxLength(80);
+
+            entity.Property(p => p.LastName)
+
+            .IsRequired()
+
+            .HasMaxLength(80);
+
+            entity.Property(p => p.BirthDate)
+
+            .IsRequired();
+
+            entity.Property(p => p.Number)
+
+            .IsRequired();
+
+            entity.Property(p => p.Position)
+
+            .IsRequired();
+
+            entity.Property(p => p.CreatedAt)
+
+            .IsRequired();
+
+            entity.Property(p => p.UpdatedAt)
+
+            .IsRequired(false);
+
+
+            // Relación 1:N con Team
+
+            entity.HasOne(p => p.Team)
+
+            .WithMany(t => t.Players)
+
+            .HasForeignKey(p => p.TeamId)
+
+            .OnDelete(DeleteBehavior.Cascade);
+
+
+            // Índice único compuesto: número de camiseta único por equipo
+
+            entity.HasIndex(p => new { p.TeamId, p.Number })
+
+            .IsUnique();
+
+        });
+
     }
 
 }

@@ -12,18 +12,20 @@ var builder = WebApplication.CreateBuilder(args);
 // ── Entity Framework Core ──
 
 builder.Services.AddDbContext<LeagueDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 // ── Repositories ──
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
-
+builder.Services.AddScoped<SportsLeague.Domain.Interfaces.Repositories.IPlayerRepository,
+                   SportsLeague.DataAccess.Repositories.PlayerRepository>();
 
 // ── Services ──
 
 builder.Services.AddScoped<ITeamService, TeamService>();
+builder.Services.AddScoped<IPlayerService, PlayerService>();
 
 
 // ── AutoMapper ──
