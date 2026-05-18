@@ -87,11 +87,15 @@ namespace SportsLeague.Domain.Services
             if (existing == null)
                 throw new KeyNotFoundException($"No se encontró el torneo con ID {id}");
 
+            //si se necesita eliminar un torneo de comenta esta parte del delete para poder eliminar y
+            //tener el swagger limpio para y hacer pruebas 
+
             if (existing.Status != TournamentStatus.Pending)
-            {
+           {
                 throw new InvalidOperationException(
-                "Solo se pueden eliminar torneos en estado Pending");
-            }
+               "Solo se pueden eliminar torneos en estado Pending");
+           }
+           // hasta aqui se debe comentar para poder borrar sin dañar la logica y luego volver a restaurar 
             _logger.LogInformation("Deleting tournament with ID: {TournamentId}", id);
             await _tournamentRepository.DeleteAsync(id);
         }
@@ -143,6 +147,7 @@ namespace SportsLeague.Domain.Services
                $"No se encontró el equipo con ID {teamId}");
 
             // Validar que no esté ya inscrito
+
             var existing = await _tournamentTeamRepository
             .GetByTournamentAndTeamAsync(tournamentId, teamId);
             if (existing != null)
