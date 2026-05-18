@@ -73,7 +73,7 @@ namespace SportsLeague.API.Controllers
             catch (InvalidOperationException ex) { return Conflict(new { message = ex.Message }); }
         }
         [HttpPatch("{id}/status")]
-        public async Task<ActionResult> UpdateStatus(int id, UpdateStatusDTO dto)
+        public async Task<ActionResult> UpdateStatus(int id, UpdateTournamentStatusDTO dto)
         {
             try
             {

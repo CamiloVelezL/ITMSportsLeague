@@ -5,5 +5,8 @@
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string Nationality { get; set; } = string.Empty;
+
+        //nuevo propiedad para completar la relacion con match
+        public ICollection<Match> Matches { get; set; } = new List<Match>();
     }
 }

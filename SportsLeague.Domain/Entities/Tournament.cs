@@ -15,5 +15,8 @@ namespace SportsLeague.Domain.Entities
 
         // Nuevo Para Completar la relacion con sponsor
         public ICollection<TournamentSponsor> TournamentSponsors { get; set; } = new List<TournamentSponsor>();
+
+        //nuevo para completar la relacion con match
+        public ICollection<Match> Matches { get; set; } = new List<Match>();
     }
 }
