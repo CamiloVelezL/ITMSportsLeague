@@ -67,6 +67,17 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// ── Data Seeder ── 
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider
+        .GetRequiredService<LeagueDbContext>();
+
+    await context.Database.MigrateAsync(); // Crea la BD + aplica migraciones 
+    await DataSeeder.SeedAsync(context);
+}
+
 
 // ── Middleware Pipeline ──
 
@@ -86,14 +97,3 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
-
-// ── Data Seeder ── 
-
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider
-        .GetRequiredService<LeagueDbContext>();
-
-    await context.Database.MigrateAsync(); // Crea la BD + aplica migraciones 
-    await DataSeeder.SeedAsync(context);
-}
